@@ -1,0 +1,16 @@
+name = "feedback-widget"
+type = "webpack"
+account_id = "b44f412d91a1c053d1572aca5c4cad0d"
+compatibility_flags = []
+workers_dev = true
+compatibility_date = "2021-09-29"
+
+[build]
+command = "yarn install && yarn build"
+
+[build.upload]
+format = "service-worker"
+
+[site]
+bucket = "./build"
+entry-point = "workers-site"
