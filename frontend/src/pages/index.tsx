@@ -48,13 +48,13 @@ export default function Home() {
         <Container>
           <Toolbar style={{ paddingLeft: 0, paddingRight: 0 }}>
             <NextLink href={`/`}>
-              <a style={{ height: 42 }}>
+              <a style={{ width: 'auto', height: 48 }}>
                 <img
                   src={logoSvg.src}
                   width={logoSvg.width}
                   height={logoSvg.height}
                   alt="Logo"
-                  style={{ width: 'auto', height: 'inherit' }}
+                  style={{ width: 'inherit', height: 'inherit' }}
                 />
               </a>
             </NextLink>
@@ -88,7 +88,12 @@ export default function Home() {
               </Stack>
             </Box>
             <Box sx={{ display: { xs: 'block', md: 'none' } }}>
-              <IconButton size="large" edge="end" color="inherit" onClick={handleClickMenu}>
+              <IconButton
+                size="large"
+                color="inherit"
+                onClick={handleClickMenu}
+                sx={{ backgroundColor: 'action.hover' }}
+              >
                 <MenuIcon />
               </IconButton>
               <Popover

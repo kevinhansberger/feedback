@@ -35,6 +35,7 @@ export default function MyApp(props: MyAppProps) {
       <Head>
         <title>Feedback Widget</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <style>{`#nprogress .bar { z-index: 1200 !important; background: ${theme.palette.primary.main} !important; }`}</style>
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />

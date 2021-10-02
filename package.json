@@ -1,0 +1,11 @@
+{
+  "name": "feedback",
+  "version": "1.0.0",
+  "private": true,
+  "repository": "https://github.com/drmzio/feedback.git",
+  "author": "Daniel Ramirez <daniel@akosweb.com>",
+  "scripts": {
+    "frontend": "yarn --cwd frontend/ run dev",
+    "widget": "yarn --cwd widget/ run start"
+  }
+}
