@@ -50,7 +50,7 @@ const theme = createTheme({
           flexShrink: 0
         },
       }
-    }
+    },
   }
 });
 

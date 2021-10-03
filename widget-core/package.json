@@ -1,5 +1,5 @@
 {
-  "name": "widget-vite",
+  "name": "widget-core",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",

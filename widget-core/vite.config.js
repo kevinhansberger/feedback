@@ -16,6 +16,7 @@ module.exports = defineConfig({
     lib: {
       entry: path.resolve(__dirname, 'src/main.tsx'),
       name: 'FeedbackWidget',
+      formats: ['umd'],
       filename: (format) => `my-lib.${format}.js`
     }
   },

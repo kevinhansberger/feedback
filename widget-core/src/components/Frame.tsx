@@ -32,12 +32,10 @@ export default function Frame({ head, children, onLoad, onResize = fn => fn, ...
   );
 
   useEffect(() => {
-    console.log('--- FRAME MOUNTED ---', frameRef);
     setMounted(true);
   }, []);
 
   const handleLoad = () => {
-    console.log('--- FRAME LOADED ---', frameRef.current.contentDocument.getElementById('frame'));
     resizeRef.current.observe(
       frameRef.current.contentDocument.getElementById('frame'),
       { box: 'border-box' }
@@ -49,7 +47,6 @@ export default function Frame({ head, children, onLoad, onResize = fn => fn, ...
   };
 
   const renderFrame = () => {
-    console.log('--- RENDER FRAME ---');
     const context = {
       $document: frameRef.current.contentDocument,
       $window: frameRef.current.contentWindow

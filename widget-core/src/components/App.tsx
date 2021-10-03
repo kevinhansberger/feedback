@@ -29,12 +29,16 @@ export default function App() {
     '--widget-button-width': '56px',
   }
 
+  const handleClose = () => {
+    setShow(false);
+  };
+
   return (
     <>
       {/* @ts-ignore */}
       <div style={applyStyles}>
         <WidgetButton show={show} onShow={() => setShow(!show)} />
-        <WidgetViewer show={show} />
+        <WidgetViewer show={show} onClose={handleClose} />
       </div>
     </>
   )
