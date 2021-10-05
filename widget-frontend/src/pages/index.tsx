@@ -192,7 +192,7 @@ export default function Home() {
           <Container>
             <Toolbar>
               <Typography variant="body2" color="action.active">
-                &copy; 2021 Daniel Ramirez
+                &copy; 2021 Daniel Ramirez &mdash; <Link href="https://twitter.com/drmzio" target="_blank" rel="noreferrer">@drmzio</Link>
               </Typography>
               <Box sx={{ flexGrow: 1 }} />
               <IconButton href={`https://twitter.com/widgetscripts`} target="_blank" rel="noreferrer">
