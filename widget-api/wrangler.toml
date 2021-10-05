@@ -1,0 +1,11 @@
+name = "widget-api"
+type = "javascript"
+account_id = "b44f412d91a1c053d1572aca5c4cad0d"
+compatibility_date = "2021-09-29"
+workers_dev = true
+
+[build]
+command = "yarn install && yarn run build"
+
+[build.upload]
+format = "service-worker"

@@ -4,46 +4,57 @@ const defaultTheme = createTheme();
 
 const palette = {
   primary: {
-    main: '#304ffe',
-    light: '#F0F2FF'
+    main: '#1683FC',
+    light: '#DFEEFF',
+    dark: '#036ADC'
   }
 };
 
-export const themeOptions: ThemeOptions = {
+const themeOptions: ThemeOptions = {
   palette: {
-    ...defaultTheme.palette,
     ...palette
   },
-  shape: {
-    borderRadius: 6
+  typography: {
+    fontFamily: [
+      'Inter',
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
   },
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        ':root': {
-          '--color-primary-main': palette.primary.main,
-          '--color-primary-light': palette.primary.light,
+        body: {
+          backgroundColor: 'transparent'
         }
-      }
-    },
-    MuiToolbar: {
-      styleOverrides: {
-        dense: {
-          [defaultTheme.breakpoints.up('sm')]: {
-            paddingLeft: defaultTheme.spacing(1),
-            paddingRight: defaultTheme.spacing(1),
-          }
-        }
-      }
-    },
-    MuiTooltip: {
-      defaultProps: {
-        disableInteractive: true,
       }
     },
     MuiButton: {
       defaultProps: {
         disableElevation: true,
+      },
+      styleOverrides: {
+        root: {
+          minWidth: 112,
+          textTransform: 'none',
+          whiteSpace: 'nowrap',
+          flexShrink: 0
+        },
+      }
+    },
+    MuiToggleButton: {
+      styleOverrides: {
+        root: {
+          border: '1px solid rgba(0, 0, 0, 0.23)'
+        }
       }
     }
   }
