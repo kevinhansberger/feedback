@@ -10,7 +10,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { theme } from '~/theme';
 import 'nprogress/nprogress.css';
-import { APP_DESCRIPTION, APP_NAME } from '~/constants';
+import { APP_DESCRIPTION, APP_NAME, APP_URL } from '~/constants';
 import createEmotionCache from '~/utils/createEmotionCache';
 import DefaultLayout from '~/components/layouts/DefaultLayout';
 import SessionContextProvider from '~/components/SessionContextProvider';
@@ -56,10 +56,24 @@ export default function MyApp(props: MyAppProps) {
         <DefaultSeo
           title={APP_NAME}
           description={APP_DESCRIPTION}
+          openGraph={{
+            url: APP_URL,
+            title: APP_NAME,
+            site_name: APP_NAME,
+            description: APP_DESCRIPTION,
+            images: [
+              {
+                url: APP_URL + '/social.jpg',
+                width: 800,
+                height: 600,
+                alt: APP_NAME
+              }
+            ]
+          }}
           twitter={{
             handle: '@drmzio',
             site: '@widgetscripts',
-            cardType: 'summary'
+            cardType: 'summary_large_image'
           }}
         />
         <ThemeProvider theme={theme}>
