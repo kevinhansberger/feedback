@@ -1,6 +1,7 @@
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Button, Container, Typography } from '@mui/material';
 import InstallSteps from '~/components/InstallSteps';
 import Page from '~/components/Page';
+import NextLink from 'next/link';
 
 export default function InstallPage() {
   return (
@@ -14,6 +15,11 @@ export default function InstallPage() {
             Follow the installation steps below to start receiving customer feedback for your site.
           </Typography>
           <InstallSteps />
+          <NextLink passHref href={`/dashboard`}>
+            <Button variant="contained" size="large">
+              View your dashboard
+            </Button>
+          </NextLink>
         </Container>
       </Box>
     </Page>

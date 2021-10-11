@@ -1,8 +1,7 @@
-import { useSession } from '~/context';
 import { useEffect, useState } from 'react';
+import { TableContainer, Table, TableBody, TableCell, TableHead, TableRow, Paper, Box } from '@mui/material';
 import { supabase } from '~/utils/supabaseClient';
-import { TableContainer, Table, TableBody, TableCell, TableHead, TableRow, Paper } from '@mui/material';
-import { REACTIONS } from '~/constants';
+import { REACTION_EMOJIS, REACTIONS } from '~/constants';
 
 type Responses = {
   id: string;
@@ -14,7 +13,6 @@ type Responses = {
 }
 
 export default function ResponsesTable() {
-  const session = useSession();
   const [loading, setLoading] = useState(false);
   const [responses, setResponses] = useState<Responses[]>([]);
 
@@ -22,11 +20,17 @@ export default function ResponsesTable() {
     try {
       setLoading(true);
       const { data, error } = await supabase
-        .from('fw_responses')
-        .select();
+        .from('fw_sites')
+        .select(`
+          id, origin, created_at,
+          fw_responses (
+            id, reaction, message, created_at
+          )
+        `);
 
-      console.log(data);
-      setResponses(data);
+      if (data.length > 0) {
+        setResponses(data[0].fw_responses);
+      }
 
       if (error) throw error;
     } catch (error) {
@@ -49,10 +53,9 @@ export default function ResponsesTable() {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell align="right">#</TableCell>
+            <TableCell align="right" style={{ width: 1 }}>#</TableCell>
             <TableCell>Reaction</TableCell>
             <TableCell>Message</TableCell>
-            <TableCell>Metadata</TableCell>
             <TableCell>Created At</TableCell>
           </TableRow>
         </TableHead>
@@ -60,9 +63,15 @@ export default function ResponsesTable() {
           {responses.map((response, i) => (
             <TableRow key={response.id}>
               <TableCell align="right">{i+1}</TableCell>
-              <TableCell>{REACTIONS[response.reaction]}</TableCell>
+              <TableCell>
+                <Box
+                  component="span"
+                  dangerouslySetInnerHTML={{ __html: REACTION_EMOJIS[REACTIONS[response.reaction]] }}
+                  sx={{ fontSize: '16px', color: 'black', mr: 1 }}
+                />
+                {REACTIONS[response.reaction]}
+              </TableCell>
               <TableCell>{response.message}</TableCell>
-              <TableCell>{JSON.stringify(response.metadata)}</TableCell>
               <TableCell>{response.created_at.substring(0, 10)}</TableCell>
             </TableRow>
           ))}
