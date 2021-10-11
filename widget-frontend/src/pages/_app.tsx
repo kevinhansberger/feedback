@@ -50,8 +50,12 @@ export default function MyApp(props: MyAppProps) {
           <title>{APP_NAME}</title>
           <meta name="viewport" content="initial-scale=1, width=device-width" />
           <style>{`#nprogress .bar { z-index: 1200 !important; background: ${theme.palette.primary.main} !important; }`}</style>
-          <link rel="shortcut icon" href={`/favicon.ico`} type="image/x-icon" />
-          <link rel="icon" href={`/favicon.ico`} type="image/x-icon" />
+          <link rel="shortcut icon" type="image/x-icon" href={`/favicon.ico`} />
+          <link rel="icon" type="image/x-icon" href={`/favicon.ico`} />
+          <link rel="apple-touch-icon" sizes="180x180" href={`/apple-touch-icon.png`} />
+          <link rel="icon" type="image/png" sizes="32x32" href={`/favicon-32x32.png`} />
+          <link rel="icon" type="image/png" sizes="16x16" href={`/favicon-16x16.png`} />
+          <link rel="manifest" href={`/site.webmanifest`} />
         </Head>
         <DefaultSeo
           title={APP_NAME}
@@ -65,7 +69,7 @@ export default function MyApp(props: MyAppProps) {
               {
                 url: APP_URL + '/social.jpg',
                 width: 800,
-                height: 600,
+                height: 400,
                 alt: APP_NAME
               }
             ]
