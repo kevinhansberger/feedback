@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { TableContainer, Table, TableBody, TableCell, TableHead, TableRow, Paper, Box } from '@mui/material';
+import { TableContainer, Table, TableBody, TableCell, TableHead, TableRow, Paper, Box, Alert } from '@mui/material';
 import { supabase } from '~/utils/supabaseClient';
 import { REACTION_EMOJIS, REACTIONS } from '~/constants';
 
@@ -44,10 +44,6 @@ export default function ResponsesTable() {
     fetchResponses();
   }, []);
 
-  if (responses.length === 0) {
-    return null;
-  }
-
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -60,7 +56,7 @@ export default function ResponsesTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {responses.map((response, i) => (
+          {responses.length > 0 ? responses.map((response, i) => (
             <TableRow key={response.id}>
               <TableCell align="right">{i+1}</TableCell>
               <TableCell>
@@ -74,7 +70,15 @@ export default function ResponsesTable() {
               <TableCell>{response.message}</TableCell>
               <TableCell>{response.created_at.substring(0, 10)}</TableCell>
             </TableRow>
-          ))}
+          )) : (
+            <TableRow>
+              <TableCell colSpan={4}>
+                <Alert severity="info">
+                  Feedback responses will appear here
+                </Alert>
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </Table>
     </TableContainer>

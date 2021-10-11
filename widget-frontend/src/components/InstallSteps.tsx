@@ -134,9 +134,11 @@ export default function InstallSteps() {
                 name="origin"
                 value={values.origin}
                 onChange={handleChangeValue}
-                disabled={hasSites}
+                disabled={hasSites || !isSignedIn}
               />
-              <Button type="submit" variant="contained" disabled={hasSites}>Add</Button>
+              <Button type="submit" variant="contained" disabled={hasSites || !isSignedIn}>
+                Add
+              </Button>
             </Stack>
           </form>
           {hasSites && <FormHelperText>Site already registered</FormHelperText>}
