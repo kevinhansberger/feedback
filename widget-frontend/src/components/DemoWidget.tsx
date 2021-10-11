@@ -17,7 +17,7 @@ export default function DemoWidget() {
     $frame?.contentDocument?.head.appendChild(embedScript);
 
     const demoScript = document.createElement('script');
-    demoScript.textContent = 'setTimeout(function(){ window.$widget.open(); }, 1500)';
+    demoScript.textContent = `window.WIDGET_SITE_ID = '62657d94-784c-487c-949a-5b40427a1150'; setTimeout(function(){ window.$widget.open(); }, 1500)`;
 
     $frame?.contentDocument?.body.appendChild(demoScript);
   };

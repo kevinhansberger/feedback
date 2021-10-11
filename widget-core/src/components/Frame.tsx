@@ -11,13 +11,15 @@ interface FrameContextProps {
 interface FrameProps extends React.HtmlHTMLAttributes<HTMLIFrameElement> {
   children?: any;
   head?: React.ReactNode;
+  title?: string;
   onLoad?: () => void;
   onResize?: (newSize: ResizeObjectType) => void;
 }
 
 export const FrameContext = createContext<FrameContextProps>(null);
 
-export default function Frame({ head, children, onLoad, onResize = fn => fn, ...rest }: FrameProps) {
+export default function Frame(props: FrameProps) {
+  const { head, children, title = 'frame', onLoad = () => {}, onResize = (fn) => {}, ...rest } = props;
   const frameRef = useRef<HTMLIFrameElement>(null);
   const [mounted, setMounted] = useState(false);
   const resizeRef = useRef<ResizeObserver>(
@@ -69,7 +71,7 @@ export default function Frame({ head, children, onLoad, onResize = fn => fn, ...
   return (
     <iframe
       ref={frameRef}
-      title="frame"
+      title={title}
       scrolling="no"
       frameBorder="0"
       onLoad={handleLoad}

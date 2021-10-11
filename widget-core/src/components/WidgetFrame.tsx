@@ -19,11 +19,13 @@ function EmotionProvider({ children, $head }) {
   )
 }
 
-function WidgetFrame({ children, ...rest }) {
+function WidgetFrame(props) {
+  const { children, ...rest } = props;
   return (
     <Frame
       head={
         <>
+          <title>Feedback Widget</title>
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
         </>
       }

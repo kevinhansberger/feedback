@@ -1,7 +1,5 @@
 import { createTheme, ThemeOptions } from '@mui/material';
 
-const defaultTheme = createTheme();
-
 const palette = {
   primary: {
     main: '#1683FC',
@@ -43,11 +41,13 @@ const themeOptions: ThemeOptions = {
       },
       styleOverrides: {
         root: {
-          minWidth: 112,
           textTransform: 'none',
           whiteSpace: 'nowrap',
           flexShrink: 0
         },
+        sizeMedium: {
+          minWidth: 112,
+        }
       }
     },
     MuiToggleButton: {

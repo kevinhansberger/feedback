@@ -1,17 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import { styled, Theme } from '@mui/material/styles';
-import { Backdrop, Box, CircularProgress, Stack, TextField, ToggleButton, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { styled } from '@mui/material/styles';
+import Backdrop from '@mui/material/Backdrop';
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+import ToggleButton from '@mui/material/ToggleButton';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
+import Avatar from '@mui/material/Avatar';
+import Zoom from '@mui/material/Zoom';
 import Button from '@mui/material/Button';
 import WidgetFrame from './WidgetFrame';
 import Grow from '@mui/material/Grow';
 import Emoji from './Emoji';
+import {
+  REACTIONS, REACTION_EMOJIS,
+  WIDGET_BUTTON_HEIGHT, WIDGET_OFFSET_X, WIDGET_OFFSET_Y, WIDGET_VIEWER_HEIGHT, WIDGET_VIEWER_WIDTH
+} from '~/constants';
+import { useWidgetContext } from '~/context';
+import CheckIcon from '@mui/icons-material/Check';
 
 const StyledWidgetViewer = styled('div')(({ theme }) => ({
   position: 'fixed',
-  left: 'var(--widget-offset-x)',
-  bottom: `calc(var(--widget-offset-y) + var(--widget-button-height) + (var(--widget-offset-y) / 2))`,
-  width: 300,
-  height: 241,
+  left: WIDGET_OFFSET_X,
+  bottom: (WIDGET_OFFSET_Y + WIDGET_BUTTON_HEIGHT + (WIDGET_OFFSET_Y / 2)),
+  width: WIDGET_VIEWER_WIDTH,
+  height: WIDGET_VIEWER_HEIGHT,
   zIndex: 1000,
   borderRadius: 8,
   boxShadow: theme.shadows[12],
@@ -20,7 +35,7 @@ const StyledWidgetViewer = styled('div')(({ theme }) => ({
 }));
 
 interface ReactionButtonProps {
-  value: string;
+  value: number;
   selected: boolean;
   error?: boolean;
   onChange: (newValue) => void;
@@ -54,27 +69,25 @@ function ReactionButton(props: ReactionButtonProps) {
   )
 }
 
-const reactions = {
-  BAD: 'BAD', DECENT: 'DECENT', GOOD: 'GOOD', AMAZING: 'AMAZING'
-}
-
 type ErrorType = {
   name: string;
   message: string;
 }
 
-export default function WidgetViewer({ show, onClose, ...rest }) {
+type ValuesType = {
+  reaction: number | null;
+  message: string;
+}
+
+export default function WidgetViewer() {
+  const { show, setShow, siteId } = useWidgetContext();
   const [success, setSuccess] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState<ErrorType[]>([]);
-  const [values, setValues] = useState({
+  const [values, setValues] = useState<ValuesType>({
     reaction: null,
     message: ''
   });
-
-  useEffect(() => {
-    console.log(values);
-  }, [values]);
 
   const handleChangeReaction = (newValue) => {
     if (newValue !== '') {
@@ -106,7 +119,7 @@ export default function WidgetViewer({ show, onClose, ...rest }) {
 
   };
 
-  const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     let errors = [];
     setSubmitting(true);
@@ -125,64 +138,55 @@ export default function WidgetViewer({ show, onClose, ...rest }) {
       return;
     }
 
-    // Simulate ajax request
-    setTimeout(() => {
+    const response = await fetch('https://www.widgetscripts.com/api/responses/create', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        reaction: values.reaction,
+        message: values.message,
+        site_id: siteId,
+      })
+    });
+
+    if (!response.ok) {
       setSubmitting(false);
-      setSuccess(true);
-    }, 2000);
-  };
+      console.error(response.statusText);
+      return;
+    }
+
+    setSubmitting(false);
+    setSuccess(true);
+  }
+
+  const handleCloseWidget = () => {
+    setShow(false);
+  }
 
   return (
     <Grow in={show} style={{ transformOrigin: '0 100% 0' }}>
       <StyledWidgetViewer>
-        <WidgetFrame {...rest}>
+        <WidgetFrame name="widget-frame-viewer">
           {!success ? (
-            <form onSubmit={handleSubmitForm}>
-              <Box sx={{ p: 2 }}>
+            <Box sx={{ p: 2 }}>
+              <form onSubmit={handleSubmitForm} style={{ margin: 0 }}>
                 <Typography variant="body1" sx={{ fontWeight: 500, mb: 1 }}>
                   Hey! How do you like the site?
                 </Typography>
                 <Stack direction="row" justifyContent="space-between" sx={{ mb: 2 }}>
-                  <ReactionButton
-                    value={reactions.BAD}
-                    selected={reactions.BAD === values.reaction}
-                    onChange={handleChangeReaction}
-                    error={Error.has('reaction')}
-                  >
-                    <Emoji>
-                      &#128546;
-                    </Emoji>
-                  </ReactionButton>
-                  <ReactionButton
-                    value={reactions.DECENT}
-                    selected={reactions.DECENT === values.reaction}
-                    onChange={handleChangeReaction}
-                    error={Error.has('reaction')}
-                  >
-                    <Emoji>
-                      &#128528;
-                    </Emoji>
-                  </ReactionButton>
-                  <ReactionButton
-                    value={reactions.GOOD}
-                    selected={reactions.GOOD === values.reaction}
-                    onChange={handleChangeReaction}
-                    error={Error.has('reaction')}
-                  >
-                    <Emoji>
-                      &#128578;
-                    </Emoji>
-                  </ReactionButton>
-                  <ReactionButton
-                    value={reactions.AMAZING}
-                    selected={reactions.AMAZING === values.reaction}
-                    onChange={handleChangeReaction}
-                    error={Error.has('reaction')}
-                  >
-                    <Emoji>
-                      &#128525;
-                    </Emoji>
-                  </ReactionButton>
+                  {REACTIONS.map((reaction, i) => (
+                    <ReactionButton
+                      key={i}
+                      value={i}
+                      selected={i === values.reaction}
+                      onChange={handleChangeReaction}
+                      error={Error.has('reaction')}
+                    >
+                      <Emoji code={REACTION_EMOJIS[reaction]} />
+                    </ReactionButton>
+                  ))}
                 </Stack>
                 <TextField
                   fullWidth
@@ -204,24 +208,36 @@ export default function WidgetViewer({ show, onClose, ...rest }) {
                 >
                   Let us know!
                 </Button>
-                <Box sx={{ mb: -1, textAlign: 'right' }}>
-                  <Typography variant="caption" color="text.disabled">
-                    Feedback Widget
-                  </Typography>
-                </Box>
-              </Box>
-            </form>
+              </form>
+              <Backdrop
+                open={submitting}
+                sx={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', color: 'primary.main' }}
+              >
+                <CircularProgress color="inherit" />
+              </Backdrop>
+            </Box>
           ) : (
-            <div>
-              Thank you!
-            </div>
+            <Box sx={{ display: 'flex', alignItems: 'center', height: WIDGET_VIEWER_HEIGHT }}>
+              <Box sx={{ textAlign: 'center', width: '100%' }}>
+                <Zoom in={true}>
+                  <Avatar sx={{ width: 48, height: 48, backgroundColor: 'primary.light', color: 'primary.main', mx: 'auto', mb: 2 }}>
+                    <CheckIcon />
+                  </Avatar>
+                </Zoom>
+                <Typography sx={{ fontWeight: 600 }}>Feedback was received!</Typography>
+                <Typography component="p" variant="caption">You may now close this widget box.</Typography>
+                <Button size="small" onClick={handleCloseWidget}>Close</Button>
+              </Box>
+            </Box>
           )}
-          <Backdrop
-            open={submitting}
-            sx={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', color: 'primary.main' }}
-          >
-            <CircularProgress color="inherit" />
-          </Backdrop>
+          <Box sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, textAlign: 'center', py: 1 }}>
+            <Typography variant="caption" color="text.disabled">
+              {`Powered by `}
+              <Link color="inherit" href="https://www.widgetscripts.com" target="_blank" rel="noreferrer">
+                Feedback
+              </Link>
+            </Typography>
+          </Box>
         </WidgetFrame>
       </StyledWidgetViewer>
     </Grow>

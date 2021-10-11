@@ -52,9 +52,9 @@ export const themePalette = {
     dark: '#036ADC'
   },
   secondary: {
-    main: '#334155',
-    light: '#334155',
-    dark: '#334155',
+    main: '#000000',
+    light: '#333333',
+    dark: '#000000',
   },
 }
 
@@ -77,14 +77,15 @@ export const theme = createTheme({
     ].join(','),
     h1: {
       fontWeight: 600,
+      letterSpacing: '-0.5px',
       fontSize: '5rem',
       color: themePalette.primary.dark,
     },
-    h2: { fontWeight: 600 },
-    h3: { fontWeight: 600 },
-    h4: { fontWeight: 600 },
-    h5: { fontWeight: 500 },
-    h6: { fontWeight: 500 },
+    h2: { fontWeight: 600, letterSpacing: '-0.5px', },
+    h3: { fontWeight: 600, letterSpacing: '-0.5px', },
+    h4: { fontWeight: 600, letterSpacing: '-0.5px', },
+    h5: { fontWeight: 600, letterSpacing: '-0.5px', },
+    h6: { fontWeight: 600, letterSpacing: '-0.5px', },
     subtitle1: {
       fontSize: '1.125rem',
     }
@@ -114,7 +115,9 @@ export const theme = createTheme({
           }
         },
         dense: {
+          minHeight: 64,
           [defaultTheme.breakpoints.up('sm')]: {
+            minHeight: 72,
             paddingLeft: defaultTheme.spacing(2),
             paddingRight: defaultTheme.spacing(2),
           }
@@ -127,7 +130,6 @@ export const theme = createTheme({
       },
       styleOverrides: {
         root: {
-          minWidth: 112,
           textTransform: 'none',
           whiteSpace: 'nowrap',
           flexShrink: 0

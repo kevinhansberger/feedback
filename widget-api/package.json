@@ -7,6 +7,7 @@
   "main": "dist/worker.js",
   "scripts": {
     "build": "webpack",
+    "dev": "miniflare --watch",
     "format": "prettier --write  '*.{json,js}' 'src/**/*.{js,ts}' 'test/**/*.{js,ts}'",
     "lint": "eslint --max-warnings=0 src && prettier --check '*.{json,js}' 'src/**/*.{js,ts}' 'test/**/*.{js,ts}'",
     "test": "jest --config jestconfig.json --verbose"
