@@ -9,6 +9,7 @@ import Page from '~/components/Page';
 import BuildRoundedIcon from '@mui/icons-material/BuildRounded';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import StarIcon from '@mui/icons-material/Star';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const Header = ({ ...rest }: BoxProps) => <Box component="header" {...rest} />;
 const Section = ({ ...rest }: BoxProps) => <Box component="section" {...rest} />;
@@ -29,7 +30,7 @@ export default function HomePage() {
                 </Typography>
               </Box>
               <NextLink passHref href={`/install`}>
-                <Button variant="contained" color="primary" size="large">
+                <Button variant="contained" color="primary" size="large" endIcon={<ArrowForwardIcon />}>
                   Add to your site
                 </Button>
               </NextLink>
@@ -160,6 +161,11 @@ export default function HomePage() {
               </Card>
             </Grid>
           </Grid>
+          <NextLink passHref href={`/install`}>
+            <Button variant="contained" color="primary" size="large" endIcon={<ArrowForwardIcon />}>
+              Get started
+            </Button>
+          </NextLink>
         </Container>
       </Section>
       <Section sx={{ py: { xs: 8, sm: 16 }, textAlign: 'center' }}>
@@ -170,7 +176,7 @@ export default function HomePage() {
                 Need help?
               </Typography>
               <Typography color="grey.700">
-                {`Message us on Twitter at `}
+                {`Tweet us at `}
                 <Link href={`https://twitter.com/widgetscripts`} target="_blank" rel="noreferrer">
                   @widgetscripts
                 </Link>

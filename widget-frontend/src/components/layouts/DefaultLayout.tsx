@@ -9,6 +9,7 @@ import logoSvg from '~/assets/logo.svg';
 import MenuIcon from '@mui/icons-material/Menu';
 import MobileMenu from '~/components/MobileMenu';
 import CloseIcon from '@mui/icons-material/Close';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const MainContent = ({ ...rest }) => <Box component="main" {...rest} />;
 const MainFooter = Box;
@@ -67,7 +68,7 @@ export default function DefaultLayout({ children }) {
                     </Link>
                   </NextLink>
                   <NextLink passHref href={`/install`}>
-                    <Button variant="contained" color="primary" size="large">
+                    <Button variant="contained" color="primary" size="large" endIcon={<ArrowForwardIcon />}>
                       Add to your site
                     </Button>
                   </NextLink>
@@ -96,7 +97,7 @@ export default function DefaultLayout({ children }) {
                     horizontal: 'right',
                   }}
                   PaperProps={{
-                    style: { width: '100%', maxWidth: 480, position: 'relative' }
+                    style: { position: 'relative' }
                   }}
                 >
                   <AppBar position="static" color="transparent" sx={{ pt: 2 }}>

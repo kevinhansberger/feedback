@@ -18,15 +18,16 @@ type SitesType = {
   created_at: string;
 }
 
-const defaultHeaders = {
-  'Content-Type': 'application/json'
-};
-
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET,HEAD,POST,OPTIONS',
   'Access-Control-Max-Age': '86400',
 }
+
+const defaultHeaders = {
+  'Content-Type': 'application/json',
+  ...corsHeaders
+};
 
 function handleOptions(request: Request) {
   // Make sure the necessary headers are present for this to be a valid pre-flight request
@@ -64,7 +65,10 @@ router.post('/api/responses/create', async (request: Request) => {
         code: 400,
         status: 'bad_request'
       }),
-      { status: 400 }
+      {
+        status: 400,
+        headers: defaultHeaders,
+      }
     )
   }
 
@@ -90,7 +94,10 @@ router.post('/api/responses/create', async (request: Request) => {
         code: 400,
         status: 'invalid_site_id'
       }),
-      { status: 400 }
+      {
+        status: 400,
+        headers: defaultHeaders,
+      }
     );
   }
 
@@ -101,7 +108,10 @@ router.post('/api/responses/create', async (request: Request) => {
         code: 201,
         status: 'created'
       }),
-      { status: 201 }
+      {
+        status: 201,
+        headers: defaultHeaders,
+      }
     );
   } else {
     try {
@@ -124,7 +134,10 @@ router.post('/api/responses/create', async (request: Request) => {
           code: error.code,
           status: 'server_error'
         }),
-        { status: error.code }
+        {
+          status: error.code,
+          headers: defaultHeaders,
+        }
       );
     }
   }
@@ -134,7 +147,10 @@ router.post('/api/responses/create', async (request: Request) => {
       code: 201,
       status: 'created'
     }),
-    { status: 201 }
+    {
+      status: 201,
+      headers: defaultHeaders
+    }
   );
 })
 

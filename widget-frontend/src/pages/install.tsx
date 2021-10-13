@@ -1,7 +1,9 @@
+import React from 'react';
 import { Box, Button, Container, Typography } from '@mui/material';
 import InstallSteps from '~/components/InstallSteps';
 import Page from '~/components/Page';
 import NextLink from 'next/link';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 export default function InstallPage() {
   return (
@@ -16,7 +18,7 @@ export default function InstallPage() {
           </Typography>
           <InstallSteps />
           <NextLink passHref href={`/dashboard`}>
-            <Button variant="contained" size="large">
+            <Button variant="outlined" endIcon={<ArrowForwardIcon />}>
               View your dashboard
             </Button>
           </NextLink>
