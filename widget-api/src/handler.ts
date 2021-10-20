@@ -58,7 +58,7 @@ router.post('/api/responses/create', async (request: Request) => {
   let origin: string = request.headers.get('Origin');
   const values: ValuesType = await request.json();
 
-  // Validation
+  // Request validation
   if (!('reaction' in values) || !('message' in values) || !('site_id' in values)) {
     return new Response(
       JSON.stringify({
@@ -70,6 +70,20 @@ router.post('/api/responses/create', async (request: Request) => {
         headers: defaultHeaders,
       }
     )
+  }
+
+  // Always succeed on demo widgets with this UUID.
+  if (values.site_id === '00000000-0000-0000-0000-000000000000') {
+    return new Response(
+      JSON.stringify({
+        code: 201,
+        status: 'created'
+      }),
+      {
+        status: 201,
+        headers: defaultHeaders
+      }
+    );
   }
 
   // Cleans the site_url from "http", "https", and "www" subdomain.

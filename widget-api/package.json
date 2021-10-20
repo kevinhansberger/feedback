@@ -2,7 +2,6 @@
   "name": "widget-api",
   "version": "1.0.0",
   "private": true,
-  "description": "",
   "author": "Daniel Ramirez",
   "main": "dist/worker.js",
   "scripts": {
@@ -12,12 +11,10 @@
     "lint": "eslint --max-warnings=0 src && prettier --check '*.{json,js}' 'src/**/*.{js,ts}' 'test/**/*.{js,ts}'",
     "test": "jest --config jestconfig.json --verbose"
   },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "typescript",
-      "prettier"
-    ]
+  "dependencies": {
+    "@supabase/supabase-js": "^1.24.0",
+    "itty-router": "^2.4.4",
+    "itty-router-extras": "^0.4.2"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^2.2.2",
@@ -39,9 +36,11 @@
     "webpack": "^5.38.1",
     "webpack-cli": "^4.7.0"
   },
-  "dependencies": {
-    "@supabase/supabase-js": "^1.24.0",
-    "itty-router": "^2.4.4",
-    "itty-router-extras": "^0.4.2"
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "typescript",
+      "prettier"
+    ]
   }
 }
