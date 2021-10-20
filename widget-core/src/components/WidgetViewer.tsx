@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
@@ -84,10 +84,27 @@ export default function WidgetViewer() {
   const [success, setSuccess] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState<ErrorType[]>([]);
+  const [count, setCount] = useState(0);
   const [values, setValues] = useState<ValuesType>({
     reaction: null,
     message: ''
   });
+
+  useEffect(() => {
+    if (success) {
+      const interval = setInterval(() => {
+        setCount(prevCount => {
+          if (prevCount < 100) {
+            return prevCount + 1;
+          } else {
+            setCount(0);
+            setShow(false);
+            clearInterval(interval);
+          }
+        });
+      }, 100);
+    }
+  }, [success]);
 
   const handleChangeReaction = (newValue) => {
     if (newValue !== '') {
@@ -220,12 +237,27 @@ export default function WidgetViewer() {
             <Box sx={{ display: 'flex', alignItems: 'center', height: WIDGET_VIEWER_HEIGHT }}>
               <Box sx={{ textAlign: 'center', width: '100%' }}>
                 <Zoom in={true}>
-                  <Avatar sx={{ width: 48, height: 48, backgroundColor: 'primary.light', color: 'primary.main', mx: 'auto', mb: 2 }}>
-                    <CheckIcon />
-                  </Avatar>
+                  <Box sx={{ position: 'relative', width: 48, height: 48, mx: 'auto', mb: 2 }}>
+                    <Avatar sx={{ width: 48, height: 48, backgroundColor: 'primary.light', color: 'primary.main' }}>
+                      <CheckIcon />
+                    </Avatar>
+                    <CircularProgress
+                      variant="determinate"
+                      value={count}
+                      sx={{
+                        position: 'absolute',
+                        top: 0, left: 0,
+                        width: '52px !important', height: '52px !important',
+                        margin: '-2px',
+                        '.MuiCircularProgress-circle': {
+                          strokeWidth: 1.5
+                        }
+                      }}
+                    />
+                  </Box>
                 </Zoom>
-                <Typography sx={{ fontWeight: 600 }}>Feedback was received!</Typography>
-                <Typography component="p" variant="caption">You may now close this widget box.</Typography>
+                <Typography sx={{ fontWeight: 500 }}>Feedback was received!</Typography>
+                <Typography component="p" variant="caption" color="text.secondary">You may now close this widget box.</Typography>
                 <Button size="small" onClick={handleCloseWidget}>Close</Button>
               </Box>
             </Box>
@@ -233,7 +265,7 @@ export default function WidgetViewer() {
           <Box sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, textAlign: 'center', py: 1 }}>
             <Typography variant="caption" color="text.disabled">
               {`Powered by `}
-              <Link color="inherit" href="https://www.widgetscripts.com" target="_blank" rel="noreferrer">
+              <Link color="inherit" href="https://www.widgetscripts.com" target="_blank">
                 Feedback
               </Link>
             </Typography>

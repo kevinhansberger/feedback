@@ -22,31 +22,11 @@ export default function Frame(props: FrameProps) {
   const { head, children, title = 'frame', onLoad = () => {}, onResize = (fn) => {}, ...rest } = props;
   const frameRef = useRef<HTMLIFrameElement>(null);
   const [mounted, setMounted] = useState(false);
-  const resizeRef = useRef<ResizeObserver>(
-    new ResizeObserver(entries => {
-      for (const entry of entries) {
-        onResize({
-          width: entry.contentRect.width,
-          height: entry.contentRect.height,
-        });
-      }
-    })
-  );
+  const [, setCount] = useState(0);
 
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  const handleLoad = () => {
-    resizeRef.current.observe(
-      frameRef.current.contentDocument.getElementById('frame'),
-      { box: 'border-box' }
-    );
-
-    if (typeof onLoad === 'function') {
-      onLoad();
-    }
-  };
 
   const renderFrame = () => {
     const context = {
@@ -66,7 +46,11 @@ export default function Frame(props: FrameProps) {
       createPortal(head, frameRef.current.contentDocument.head),
       createPortal(body, frameRef.current.contentDocument.body),
     ];
-  };
+  }
+
+  const handleFrameLoad = () => {
+    setCount(c => c + 1);
+  }
 
   return (
     <iframe
@@ -74,7 +58,7 @@ export default function Frame(props: FrameProps) {
       title={title}
       scrolling="no"
       frameBorder="0"
-      onLoad={handleLoad}
+      onLoad={handleFrameLoad}
       {...rest}
     >
       {mounted && renderFrame()}
