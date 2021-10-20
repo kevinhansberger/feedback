@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import { AppBar, Box, Container, IconButton, Toolbar } from '@mui/material';
+import { AppBar, Box, Container, IconButton, Toolbar, Tooltip } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import logoSvg from '~/assets/logo.svg';
 import { supabase } from '~/utils/supabaseClient';
@@ -44,9 +44,11 @@ export default function DashboardLayout({ children }) {
               </a>
             </NextLink>
             <Box sx={{ flexGrow: 1 }} />
-            <IconButton onClick={handleSignOut}>
-              <LogoutIcon />
-            </IconButton>
+            <Tooltip title="Sign out">
+              <IconButton onClick={handleSignOut}>
+                <LogoutIcon />
+              </IconButton>
+            </Tooltip>
           </Toolbar>
         </Container>
       </AppBar>

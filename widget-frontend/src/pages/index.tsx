@@ -54,7 +54,7 @@ export default function HomePage() {
               Features
             </Typography>
             <Typography component="p" variant="subtitle1" color="grey.700">
-              Here's what Feedback has to offer for your business
+              Here's what <em>Feedback</em> has to offer for your business
             </Typography>
           </Container>
         </Header>
@@ -63,7 +63,7 @@ export default function HomePage() {
             <Grid item xs={12} sm={6} md={4}>
               <Grid container spacing={2}>
                 <Grid item>
-                  <Avatar sx={{ width: 56, height: 56, backgroundColor: 'primary.main', mt: -1.5 }}>
+                  <Avatar sx={{ width: 56, height: 56, backgroundColor: 'primary.light', color: 'primary.main', mt: -1.5 }}>
                     <BuildRoundedIcon />
                   </Avatar>
                 </Grid>
@@ -80,7 +80,7 @@ export default function HomePage() {
             <Grid item xs={12} sm={6} md={4}>
               <Grid container spacing={2}>
                 <Grid item>
-                  <Avatar sx={{ width: 56, height: 56, backgroundColor: 'primary.main', mt: -1.5 }}>
+                  <Avatar sx={{ width: 56, height: 56, backgroundColor: 'primary.light', color: 'primary.main', mt: -1.5 }}>
                     <StarIcon />
                   </Avatar>
                 </Grid>
@@ -97,7 +97,7 @@ export default function HomePage() {
             <Grid item xs={12} sm={6} md={4}>
               <Grid container spacing={2}>
                 <Grid item>
-                  <Avatar sx={{ width: 56, height: 56, backgroundColor: 'primary.main', mt: -1.5 }}>
+                  <Avatar sx={{ width: 56, height: 56, backgroundColor: 'primary.light', color: 'primary.main', mt: -1.5 }}>
                     <EmojiPeopleIcon />
                   </Avatar>
                 </Grid>
