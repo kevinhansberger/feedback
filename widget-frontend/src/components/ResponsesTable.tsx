@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { format } from 'timeago.js';
 import {
   TableContainer, Table, TableBody, TableCell, TableHead, TableRow, Paper, Box, Alert, Button, Toolbar, Typography,
-  Chip, Avatar, IconButton, Tooltip
+  Chip, Avatar, IconButton, Tooltip, Link
 } from '@mui/material';
 import { supabase } from '~/utils/supabaseClient';
 import { REACTION_EMOJIS, REACTIONS } from '~/constants';
@@ -102,12 +102,6 @@ export default function ResponsesTable() {
                     label={REACTIONS[response.reaction]}
                     variant="outlined"
                   />
-                  {/*<Box*/}
-                  {/*  component="span"*/}
-                  {/*  dangerouslySetInnerHTML={{ __html: REACTION_EMOJIS[REACTIONS[response.reaction]] }}*/}
-                  {/*  sx={{ fontSize: '16px', color: 'black', mr: 1 }}*/}
-                  {/*/>*/}
-                  {/*{REACTIONS[response.reaction]}*/}
                 </TableCell>
                 <TableCell sx={{ width: '100%', maxWidth: 200, position: 'relative', pr: 4 }}>
                   <Box
@@ -136,7 +130,7 @@ export default function ResponsesTable() {
               <TableRow>
                 <TableCell colSpan={4}>
                   <Alert severity="info">
-                    Feedback responses will appear here
+                    Feedback responses will appear here. See <Link color="inherit" href={`/install`}>installation</Link> if not yet configured your widget.
                   </Alert>
                 </TableCell>
               </TableRow>

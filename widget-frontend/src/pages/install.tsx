@@ -7,7 +7,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 export default function InstallPage() {
   return (
-    <Page title="Install" description="Learn how to install the widget on your site.">
+    <Page title="Installation" description="Learn how to install the widget on your site.">
       <Box component="section" sx={{ py: { xs: 4, sm: 8 } }}>
         <Container maxWidth="sm">
           <Typography gutterBottom component="h1" sx={{ typography: { xs: 'h4', md: 'h3' } }}>
