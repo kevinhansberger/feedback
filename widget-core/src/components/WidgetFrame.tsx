@@ -1,4 +1,3 @@
-import React from 'react';
 import { styled, ThemeProvider } from '@mui/material/styles';
 import weakMemoize from '@emotion/weak-memoize';
 import createCache from '@emotion/cache';

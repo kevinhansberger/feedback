@@ -1,4 +1,3 @@
-import React from 'react';
 import WidgetViewer from './WidgetViewer';
 import WidgetButton from './WidgetButton';
 

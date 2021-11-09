@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
@@ -11,19 +11,24 @@ import Link from '@mui/material/Link';
 import Avatar from '@mui/material/Avatar';
 import Zoom from '@mui/material/Zoom';
 import Button from '@mui/material/Button';
-import WidgetFrame from './WidgetFrame';
 import Grow from '@mui/material/Grow';
+import CheckIcon from '@mui/icons-material/Check';
+import WidgetFrame from './WidgetFrame';
 import Emoji from './Emoji';
 import {
-  REACTIONS, REACTION_EMOJIS,
-  WIDGET_BUTTON_HEIGHT, WIDGET_OFFSET_X, WIDGET_OFFSET_Y, WIDGET_VIEWER_HEIGHT, WIDGET_VIEWER_WIDTH
+  REACTIONS, REACTION_EMOJIS, WIDGET_BUTTON_HEIGHT, WIDGET_OFFSET_X, WIDGET_OFFSET_Y, WIDGET_VIEWER_HEIGHT,
+  WIDGET_VIEWER_WIDTH
 } from '~/constants';
-import { useWidgetContext } from '~/context';
-import CheckIcon from '@mui/icons-material/Check';
+import { useWidgetContext } from '~/context/widget-context';
 
-const StyledWidgetViewer = styled('div')(({ theme }) => ({
+type StyledWidgetViewerProps = {
+  placement: string;
+}
+
+const StyledWidgetViewer = styled('div')<StyledWidgetViewerProps>(({ theme, placement }) => ({
   position: 'fixed',
-  left: WIDGET_OFFSET_X,
+  left: placement === 'left' ? WIDGET_OFFSET_X : 'auto',
+  right: placement === 'right' ? WIDGET_OFFSET_X : 'auto',
   bottom: (WIDGET_OFFSET_Y + WIDGET_BUTTON_HEIGHT + (WIDGET_OFFSET_Y / 2)),
   width: WIDGET_VIEWER_WIDTH,
   height: WIDGET_VIEWER_HEIGHT,
@@ -80,7 +85,7 @@ type ValuesType = {
 }
 
 export default function WidgetViewer() {
-  const { show, setShow, siteId } = useWidgetContext();
+  const { show, setShow, siteId, config } = useWidgetContext();
   const [success, setSuccess] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState<ErrorType[]>([]);
@@ -183,8 +188,8 @@ export default function WidgetViewer() {
   }
 
   return (
-    <Grow in={show} style={{ transformOrigin: '0 100% 0' }}>
-      <StyledWidgetViewer>
+    <Grow in={show} style={{ transformOrigin: (config.placement === 'left') ? '0 100% 0' : '100% 100% 0' }}>
+      <StyledWidgetViewer placement={config.placement}>
         <WidgetFrame name="widget-frame-viewer">
           {!success ? (
             <Box sx={{ p: 2 }}>
@@ -265,7 +270,7 @@ export default function WidgetViewer() {
           <Box sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, textAlign: 'center', py: 1 }}>
             <Typography variant="caption" color="text.disabled">
               {`Powered by `}
-              <Link color="inherit" href="https://www.widgetscripts.com" target="_blank">
+              <Link color="inherit" href="https://www.widgetscripts.com?ref=widget" target="_blank">
                 Feedback
               </Link>
             </Typography>
